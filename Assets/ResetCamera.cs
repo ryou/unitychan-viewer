@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ResetCamera : MonoBehaviour {
 
     private Vector3 initialPosition;
-    private Quaternion initialRotation;
+    private Vector3 initialRotation;
 
     private GameObject cameraRoot;
     private GameObject mainCamera;
@@ -16,7 +17,7 @@ public class ResetCamera : MonoBehaviour {
         this.mainCamera = this.cameraRoot.transform.Find("Main Camera").gameObject;
 
         this.initialPosition = this.mainCamera.transform.position;
-        this.initialRotation = this.cameraRoot.transform.rotation;
+        this.initialRotation = this.cameraRoot.transform.rotation.eulerAngles;
 	}
 	
 	// Update is called once per frame
@@ -26,7 +27,8 @@ public class ResetCamera : MonoBehaviour {
 
     public void Reset()
     {
-        this.cameraRoot.transform.rotation = this.initialRotation;
-        this.mainCamera.transform.position = this.initialPosition;
+        var seq = DOTween.Sequence();
+        seq.Append(this.cameraRoot.transform.DOLocalRotate(this.initialRotation, 0.3f));
+        seq.Join(this.mainCamera.transform.DOLocalMove(this.initialPosition, 0.3f));
     }
 }
