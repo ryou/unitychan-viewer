@@ -6,14 +6,6 @@ public class CameraRotate : MonoBehaviour {
     private Vector3 lastMousePosition;
     private Vector3 totalMovePosition = Vector3.zero;
 
-    private GameObject mainCamera;
-
-    // Use this for initialization
-    void Start()
-    {
-        this.mainCamera = this.transform.Find("Main Camera").gameObject;
-    }
-
     // Update is called once per frame
     void Update()
     {
